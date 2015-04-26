@@ -49,7 +49,7 @@ module ForemanSnapshot
         )
       end
     ensure
-      template.unlink
+      template.unlink if template
     end
 
     private

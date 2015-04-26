@@ -20,6 +20,7 @@ module ForemanSnapshot
           param :flavor_ref, :number
           param :network,    String
           param :image_ref,  String
+          param :nics,       Array
         end
       end
       def snapshot
@@ -32,7 +33,7 @@ module ForemanSnapshot
           :hostgroup_id        => @hostgroup.id,
           :build               => 1,
           :managed             => true,
-          :compute_attributes  => { :start => "1" }
+          :compute_attributes  => { :start => "0" }
         })
         # TODO: why doesn't :start work?
 
@@ -42,6 +43,8 @@ module ForemanSnapshot
         # Override any user_supplied or hostgroup password because we have
         # no way to get it back in unencrypted form
         hash[:root_pass] = 'password'
+
+        hash[:compute_attributes][:nics] = [''] unless hash[:compute_attributes][:nics]
 
         if hash[:compute_profile_id].present?
           # can't use profiles directly until #4250 is done, so hack it here

@@ -1,6 +1,6 @@
 module ForemanSnapshot
   class Snapshot
-    class Libvirt < ForemanSnapshot::Snapshot
+    class Openstack < ForemanSnapshot::Snapshot
 
       def ip
         @host.ip

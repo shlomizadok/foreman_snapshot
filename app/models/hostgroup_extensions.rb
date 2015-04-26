@@ -8,10 +8,10 @@ module HostgroupExtensions
       # This could be run from Dynflow or directly, so we need
       # to use uncached{} to be able to detect the change in build state
       begin
-        if @host=::Host::Managed.create!(host_hash)
+        if @host = ::Host::Managed.create!(host_hash)
           until @host.build == false
             logger.debug "Sleeping for host build state: #{@host.build}"
-            sleep 10
+            sleep 1
             # Reload cache for next sleep check
             @host = uncached { Host.find(@host.id) }
           end
@@ -24,7 +24,7 @@ module HostgroupExtensions
         raise e
       end
 
-      return image
+      image
     end
   end
 
